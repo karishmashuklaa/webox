@@ -11,6 +11,7 @@ const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0
 
 type Tools struct {
 	MaxFileSize int
+	AllowedFileTypes []string
 }
 
 func (t *Tools) RandomString(n int) string {
