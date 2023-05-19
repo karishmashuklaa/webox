@@ -117,6 +117,9 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 				uploadedFiles = append(uploadedFiles, &uploadedFile)
 				return uploadedFiles, nil
 			} (uploadedFiles)
+			if err != nil {
+				return uploadedFiles, err
+			}
 		}
 	}
 }
