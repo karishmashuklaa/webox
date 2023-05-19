@@ -3,6 +3,7 @@ package webox
 import (
 	"net/http"
 	"crypto/rand"
+	"errors"
 )
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
