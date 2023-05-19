@@ -6,7 +6,9 @@ import (
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
 
-type Tools struct {}
+type Tools struct {
+	MaxFileSize int
+}
 
 func (t *Tools) RandomString(n int) string {
 	generatedString, sourceCharacters := make([]rune, n), []rune(randomStringSource)
