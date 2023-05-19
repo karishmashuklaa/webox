@@ -20,3 +20,16 @@ func (t *Tools) RandomString(n int) string {
 	
 	return string(generatedString)
 }
+
+type UploadedFile struct {
+	NewFileName string
+	OriginalFileName string
+	FileSize int64
+}
+
+func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool) ([]*UploadedFile, error) {
+	renameFile := true
+	if len(rename) > 0 {
+		renameFile = rename[0]
+	}
+}
