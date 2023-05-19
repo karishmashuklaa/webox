@@ -95,7 +95,9 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 
 				if renameFile {
 					uploadedFile.NewFileName = fmt.Sprintf("%s%s", t.RandomString(30), filepath.Ext(headr.Filename))
-				} 
+				} else {
+					uploadedFile.NewFileName = headr.Filename
+				}
 			} (uploadedFiles)
 		}
 	}
