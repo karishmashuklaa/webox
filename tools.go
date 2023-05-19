@@ -90,7 +90,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 					return nil, errors.New("The uploaded file type is not allowed")
 				}
 
-				_, err := infile.Seek(0, 0)
+				_, err = infile.Seek(0, 0)
 				if err != nil {
 					return nil, err
 				}
