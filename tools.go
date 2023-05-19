@@ -46,4 +46,18 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	if err != nil {
 		return nil, errors.New("The uploaded file is too large")
 	}
+
+	// check if any files are stored in request
+	for _, fHeaders := range req.ParseMultipartForm.File {
+		for _, headr := range fHeaders {
+			uploadedFiles, err = func(uploadedFiles []*UploadedFile) ([]*UploadedFile, error) {
+				var uploadedFile UploadedFile 
+				infile, err := headr.Open()
+				if err != nil {
+					return nil, err
+				}
+				defer infile.Close()
+			} (uploadedFiles)
+		}
+	}
 }
