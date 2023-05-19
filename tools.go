@@ -57,6 +57,13 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 					return nil, err
 				}
 				defer infile.Close()
+
+				// check file type
+				buff := make([]byte, 512)
+				_, err = infile.Read(buff)
+				if err != nil {
+					return nil, err
+				}
 			} (uploadedFiles)
 		}
 	}
