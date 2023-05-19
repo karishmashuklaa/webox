@@ -113,6 +113,9 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 					}
 					uploadedFile.FileSize = fileSize
 				}
+
+				uploadedFiles = append(uploadedFiles, &uploadedFile)
+				return uploadedFiles, nil
 			} (uploadedFiles)
 		}
 	}
