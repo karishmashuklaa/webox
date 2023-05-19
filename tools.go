@@ -139,3 +139,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	}
 	return uploadedFiles, nil
 }
+
+func (t *Tools) CreateDirIfNotExist(path string) error {
+	const mode = 0755
+}
