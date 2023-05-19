@@ -36,12 +36,11 @@ type UploadedFile struct {
 }
 
 
-func (t *Tools) UploadFile(req *http.Request, uploadDir, rename ...bool) (*UploadedFile, error) {
+func (t *Tools) UploadFile(req *http.Request, uploadDir string, rename ...bool) (*UploadedFile, error) {
 	renameFile := true
 	if len(rename) > 0 {
 		renameFile = rename[0]
 	}
-
 }
 
 
