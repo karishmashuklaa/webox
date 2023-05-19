@@ -1,6 +1,7 @@
 package webox
 
 import (
+	"net/http"
 	"crypto/rand"
 )
 
