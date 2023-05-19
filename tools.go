@@ -35,7 +35,6 @@ type UploadedFile struct {
 	FileSize         int64
 }
 
-
 func (t *Tools) UploadFile(req *http.Request, uploadDir string, rename ...bool) (*UploadedFile, error) {
 	renameFile := true
 	if len(rename) > 0 {
@@ -49,7 +48,6 @@ func (t *Tools) UploadFile(req *http.Request, uploadDir string, rename ...bool) 
 
 	return files[0], nil
 }
-
 
 func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool) ([]*UploadedFile, error) {
 	renameFile := true
