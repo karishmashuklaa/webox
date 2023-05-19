@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"crypto/rand"
 	"errors"
+	"strings"
 )
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
