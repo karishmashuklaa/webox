@@ -100,6 +100,8 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 					uploadedFile.NewFileName = headr.Filename
 				}
 
+				uploadedFile.OriginalFileName = headr.Filename
+
 				var outfile *os.File
 				defer outfile.Close()
 
