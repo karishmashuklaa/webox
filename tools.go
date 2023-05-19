@@ -90,6 +90,10 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 				if err != nil {
 					return nil, err
 				}
+
+				if renameFile {
+					uploadedFile.NewFileName = fmt.Sprintf("%s%s", t.RandomString(30), filepath.Ext(headr.Filename))
+				} 
 			} (uploadedFiles)
 		}
 	}
