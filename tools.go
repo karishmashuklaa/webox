@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"strings"
+	"fmt"
 )
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
