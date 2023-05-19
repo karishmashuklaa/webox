@@ -48,7 +48,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	}
 
 	// check if any files are stored in request
-	for _, fHeaders := range req.ParseMultipartForm.File {
+	for _, fHeaders := range req.MultipartForm.File {
 		for _, headr := range fHeaders {
 			uploadedFiles, err = func(uploadedFiles []*UploadedFile) ([]*UploadedFile, error) {
 				var uploadedFile UploadedFile 
