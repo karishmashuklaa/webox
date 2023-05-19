@@ -1,20 +1,20 @@
 package webox
 
 import (
-	"net/http"
 	"crypto/rand"
 	"errors"
-	"strings"
 	"fmt"
-	"path/filepath"
-	"os"
 	"io"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
 
 type Tools struct {
-	MaxFileSize int
+	MaxFileSize      int
 	AllowedFileTypes []string
 }
 
@@ -25,14 +25,14 @@ func (t *Tools) RandomString(n int) string {
 		index1, index2 := primeNum.Uint64(), uint64(len(sourceCharacters))
 		generatedString[i] = sourceCharacters[index1%index2]
 	}
-	
+
 	return string(generatedString)
 }
 
 type UploadedFile struct {
-	NewFileName string
+	NewFileName      string
 	OriginalFileName string
-	FileSize int64
+	FileSize         int64
 }
 
 func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool) ([]*UploadedFile, error) {
@@ -57,7 +57,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	for _, fHeaders := range req.MultipartForm.File {
 		for _, headr := range fHeaders {
 			uploadedFiles, err = func(uploadedFiles []*UploadedFile) ([]*UploadedFile, error) {
-				var uploadedFile UploadedFile 
+				var uploadedFile UploadedFile
 				infile, err := headr.Open()
 				if err != nil {
 					return nil, err
@@ -101,7 +101,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 					uploadedFile.NewFileName = headr.Filename
 				}
 
-				var outfile *os.File 
+				var outfile *os.File
 				defer outfile.Close()
 
 				if outfile, err = os.Create(filepath.Join(uploadDir, uploadedFile.NewFileName)); err != nil {
@@ -116,7 +116,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 
 				uploadedFiles = append(uploadedFiles, &uploadedFile)
 				return uploadedFiles, nil
-			} (uploadedFiles)
+			}(uploadedFiles)
 			if err != nil {
 				return uploadedFiles, err
 			}
