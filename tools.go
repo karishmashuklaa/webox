@@ -122,4 +122,5 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 			}
 		}
 	}
+	return uploadedFiles, nil
 }
