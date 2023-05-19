@@ -33,4 +33,16 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	if len(rename) > 0 {
 		renameFile = rename[0]
 	}
+
+	var uploadedFiles []*UploadedFile
+
+	if t.MaxFileSize == 0 {
+		t.MaxFileSize = 1024 * 1024 * 1024
+	}
+
+	err := req.ParseMultipartForm(int64(t.MaxFileSize))
+
+	if err != nil {
+		return nil, errors.New("The uploaded file is too large")
+	}
 }
