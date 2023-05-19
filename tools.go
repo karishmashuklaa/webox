@@ -58,7 +58,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 				}
 				defer infile.Close()
 
-				// check file type
+				// check file type by checking first 512 bytes
 				buff := make([]byte, 512)
 				_, err = infile.Read(buff)
 				if err != nil {
