@@ -41,6 +41,13 @@ func (t *Tools) UploadFile(req *http.Request, uploadDir string, rename ...bool) 
 	if len(rename) > 0 {
 		renameFile = rename[0]
 	}
+
+	files, err := t.UploadFiles(req, uploadDir, renameFile)
+	if err != nil {
+		return nil, err
+	}
+
+	return files[0], nil
 }
 
 
