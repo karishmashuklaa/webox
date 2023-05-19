@@ -7,6 +7,7 @@ import (
 	"strings"
 	"fmt"
 	"path/filepath"
+	"os"
 )
 
 const randomStringSource = "abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_+"
