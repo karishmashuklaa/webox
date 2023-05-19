@@ -70,10 +70,9 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 				// Todo : check to see if the file type is permitted
 				allowed := false
 				fileType := http.DetectContentType(buff)
-				allowedTypes := []string{"image/jpeg", "image/png", "image/gif"}
 
-				if len(allowedTypes) > 0 {
-					for _, ftype := range allowedTypes {
+				if len(t.AllowedFileTypes) > 0 {
+					for _, ftype := range t.AllowedFileTypes {
 						if strings.EqualFold(ftype, fileType) {
 							allowed = true
 							break
