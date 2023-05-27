@@ -167,6 +167,7 @@ func TestTools_UploadFiles(t *testing.T) {
 		wg.Wait()
 	}
 }
+
 func TestTools_CreateDirIfNotExistInvalidDirectory(t *testing.T) {
 	var testTool Tools
 
