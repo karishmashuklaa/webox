@@ -78,3 +78,19 @@ func TestTools_UploadOneFile(t *testing.T) {
 		}
 	}
 }
+
+var uploadTests = []struct {
+	name          string
+	allowedTypes  []string
+	renameFile    bool
+	errorExpected bool
+	maxSize       int
+	uploadDir     string
+}{
+	{name: "allowed no rename", allowedTypes: []string{"image/jpeg", "image/png"}, renameFile: false, errorExpected: false, maxSize: 0, uploadDir: ""},
+	{name: "allowed rename", allowedTypes: []string{"image/jpeg", "image/png"}, renameFile: true, errorExpected: false, maxSize: 0, uploadDir: ""},
+	{name: "allowed no filetype specified", allowedTypes: []string{}, renameFile: true, errorExpected: false, maxSize: 0, uploadDir: ""},
+	{name: "not allowed", allowedTypes: []string{"image/jpeg"}, errorExpected: true, maxSize: 0, uploadDir: ""},
+	{name: "too big", allowedTypes: []string{"image/jpeg,", "image/png"}, errorExpected: true, maxSize: 10, uploadDir: ""},
+	{name: "invalid directory", allowedTypes: []string{"image/jpeg,", "image/png"}, errorExpected: true, maxSize: 0, uploadDir: "//"},
+}
