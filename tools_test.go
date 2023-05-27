@@ -8,6 +8,7 @@ import (
 	"mime/multipart"
 	"net/http/httptest"
 	"os"
+	"sync"
 	"testing"
 )
 
@@ -93,4 +94,71 @@ var uploadTests = []struct {
 	{name: "not allowed", allowedTypes: []string{"image/jpeg"}, errorExpected: true, maxSize: 0, uploadDir: ""},
 	{name: "too big", allowedTypes: []string{"image/jpeg,", "image/png"}, errorExpected: true, maxSize: 10, uploadDir: ""},
 	{name: "invalid directory", allowedTypes: []string{"image/jpeg,", "image/png"}, errorExpected: true, maxSize: 0, uploadDir: "//"},
+}
+
+func TestTools_UploadFiles(t *testing.T) {
+	for _, e := range uploadTests {
+
+		pr, pw := io.Pipe()
+		writer := multipart.NewWriter(pw)
+		wg := sync.WaitGroup{}
+		wg.Add(1)
+		go func() {
+			defer writer.Close()
+			defer wg.Done()
+
+			part, err := writer.CreateFormFile("file", "./testdata/img.png")
+			if err != nil {
+				t.Error(err)
+			}
+
+			f, err := os.Open("./testdata/img.png")
+			if err != nil {
+				t.Error(err)
+			}
+			defer f.Close()
+			img, _, err := image.Decode(f)
+			if err != nil {
+				t.Error("error decoding image", err)
+			}
+
+			err = png.Encode(part, img)
+			if err != nil {
+				t.Error(err)
+			}
+		}()
+
+		request := httptest.NewRequest("POST", "/", pr)
+		request.Header.Add("Content-Type", writer.FormDataContentType())
+
+		var testTools Tools
+		testTools.AllowedFileTypes = e.allowedTypes
+		if e.maxSize > 0 {
+			testTools.MaxFileSize = e.maxSize
+		}
+
+		var uploadDir = "./testdata/uploads/"
+		if e.uploadDir != "" {
+			uploadDir = e.uploadDir
+		}
+
+		uploadedFiles, err := testTools.UploadFiles(request, uploadDir, e.renameFile)
+		if err != nil && !e.errorExpected {
+			t.Error(err)
+		}
+
+		if !e.errorExpected {
+			if _, err := os.Stat(fmt.Sprintf("./testdata/uploads/%s", uploadedFiles[0].NewFileName)); os.IsNotExist(err) {
+				t.Errorf("%s: expected file to exist: %s", e.name, err.Error())
+			}
+
+			_ = os.Remove(fmt.Sprintf("./testdata/uploads/%s", uploadedFiles[0].NewFileName))
+		}
+
+		if e.errorExpected && err == nil {
+			t.Errorf("%s: error expected, but none received", e.name)
+		}
+
+		wg.Wait()
+	}
 }
