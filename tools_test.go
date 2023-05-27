@@ -98,7 +98,7 @@ var uploadTests = []struct {
 
 func TestTools_UploadFiles(t *testing.T) {
 	for _, e := range uploadTests {
-
+		// set up a pipe to avoid buffering
 		pr, pw := io.Pipe()
 		writer := multipart.NewWriter(pw)
 		wg := sync.WaitGroup{}
@@ -107,6 +107,7 @@ func TestTools_UploadFiles(t *testing.T) {
 			defer writer.Close()
 			defer wg.Done()
 
+			// create the form data field 'file'
 			part, err := writer.CreateFormFile("file", "./testdata/img.png")
 			if err != nil {
 				t.Error(err)
@@ -128,6 +129,7 @@ func TestTools_UploadFiles(t *testing.T) {
 			}
 		}()
 
+		// read from the pipe which receives data
 		request := httptest.NewRequest("POST", "/", pr)
 		request.Header.Add("Content-Type", writer.FormDataContentType())
 
@@ -152,6 +154,7 @@ func TestTools_UploadFiles(t *testing.T) {
 				t.Errorf("%s: expected file to exist: %s", e.name, err.Error())
 			}
 
+			// clean up
 			_ = os.Remove(fmt.Sprintf("./testdata/uploads/%s", uploadedFiles[0].NewFileName))
 		}
 
@@ -159,6 +162,7 @@ func TestTools_UploadFiles(t *testing.T) {
 			t.Errorf("%s: error expected, but none received", e.name)
 		}
 
+		// we're running table tests, so have to use a waitgroup
 		wg.Wait()
 	}
 }
