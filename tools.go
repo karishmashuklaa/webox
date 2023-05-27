@@ -154,12 +154,12 @@ func (t *Tools) CreateDirIfNotExist(path string) error {
 
 func (t *Tools) Slugify(s string) (string, error) {
 	if s == "" {
-		return "", errors.New("empty string not permitted")
+		return "", errors.New("Empty string not permitted")
 	}
 	var re = regexp.MustCompile(`[^a-z\d]+`)
 	slug := strings.Trim(re.ReplaceAllString(strings.ToLower(s), "-"), "-")
 	if len(slug) == 0 {
-		return "", errors.New("after removing characters, slug is zero length")
+		return "", errors.New("After removing characters, slug is zero length")
 	}
 
 	return slug, nil
