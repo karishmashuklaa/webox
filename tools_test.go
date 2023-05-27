@@ -1,6 +1,7 @@
 package webox
 
 import (
+	"errors"
 	"fmt"
 	"image"
 	"image/png"
@@ -164,5 +165,13 @@ func TestTools_UploadFiles(t *testing.T) {
 
 		// we're running table tests, so have to use a waitgroup
 		wg.Wait()
+	}
+}
+func TestTools_CreateDirIfNotExistInvalidDirectory(t *testing.T) {
+	var testTool Tools
+
+	err := testTool.CreateDirIfNotExist("/mydir")
+	if err == nil {
+		t.Error(errors.New("able to create a directory where we should not be able to"))
 	}
 }
