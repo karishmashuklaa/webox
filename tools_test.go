@@ -19,6 +19,15 @@ func TestTools_RandomString(t *testing.T) {
 	}
 }
 
+var uploadOneTests = []struct {
+	name          string
+	uploadDir     string
+	errorExpected bool
+}{
+	{name: "valid", uploadDir: "./testdata/uploads/", errorExpected: false},
+	{name: "invalid", uploadDir: "//", errorExpected: true},
+}
+
 func TestTools_UploadOneFile(t *testing.T) {
 	for _, e := range uploadOneTests {
 
