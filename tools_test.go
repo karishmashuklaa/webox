@@ -64,7 +64,7 @@ func TestTools_UploadOneFile(t *testing.T) {
 		var testTools Tools
 		testTools.AllowedFileTypes = []string{"image/png"}
 
-		uploadedFiles, err := testTools.UploadOneFile(request, e.uploadDir, true)
+		uploadedFiles, err := testTools.UploadFile(request, e.uploadDir, true)
 		if e.errorExpected && err == nil {
 			t.Errorf("%s: error expected, but none received", e.name)
 		}
