@@ -65,7 +65,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 	err := req.ParseMultipartForm(int64(t.MaxFileSize))
 
 	if err != nil {
-		return nil, errors.New("The uploaded file is too large")
+		return nil, errors.New("the uploaded file is too large")
 	}
 
 	// check if any files are stored in request
@@ -101,7 +101,7 @@ func (t *Tools) UploadFiles(req *http.Request, uploadDir string, rename ...bool)
 				}
 
 				if !allowed {
-					return nil, errors.New("The uploaded file type is not allowed")
+					return nil, errors.New("the uploaded file type is not allowed")
 				}
 
 				_, err = infile.Seek(0, 0)
@@ -154,12 +154,12 @@ func (t *Tools) CreateDirIfNotExist(path string) error {
 
 func (t *Tools) Slugify(s string) (string, error) {
 	if s == "" {
-		return "", errors.New("Empty string not permitted")
+		return "", errors.New("empty string not permitted")
 	}
 	var re = regexp.MustCompile(`[^a-z\d]+`)
 	slug := strings.Trim(re.ReplaceAllString(strings.ToLower(s), "-"), "-")
 	if len(slug) == 0 {
-		return "", errors.New("After removing characters, slug is zero length")
+		return "", errors.New("after removing characters, slug is zero length")
 	}
 
 	return slug, nil
