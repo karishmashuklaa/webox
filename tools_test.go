@@ -170,6 +170,7 @@ func TestTools_UploadFiles(t *testing.T) {
 func TestTools_CreateDirIfNotExistInvalidDirectory(t *testing.T) {
 	var testTool Tools
 
+	// we should not be able to create a directory at the root level (no permissions)
 	err := testTool.CreateDirIfNotExist("/mydir")
 	if err == nil {
 		t.Error(errors.New("able to create a directory where we should not be able to"))
